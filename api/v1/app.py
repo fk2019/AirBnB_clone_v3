@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Starting my API"""
+"""api module that registeres app_views blueprint
+   and handle teardown_appcontext
+"""
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
