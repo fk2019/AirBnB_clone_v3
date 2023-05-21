@@ -90,10 +90,12 @@ class TestDBStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that get method retrieves obj based on its name and id"""
-        state_obj = State(name="Florida")
-        state_obj.save()
-        get_obj = models.storage.get(State, state_obj.id)
-        self.assertEqual(state_obj, get_obj)
+        new_state_obj = State(name="Texas")
+        new_state_obj.save()
+        state_ob = [ob for ob in models.storage.all(State).values()][0]
+        get_obj = models.storage.get(State, new_state_obj.id)
+        self.assertEqual(new_state_obj, get_obj)
+        self.assertEqual(state_ob, models.storage.get(State, state_ob.id))
         self.assertEqual(None, models.storage.get(State, 'gg'))
         self.assertEqual(None, models.storage.get('df', 'gg'))
 

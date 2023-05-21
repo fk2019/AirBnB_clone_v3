@@ -80,15 +80,12 @@ class DBStorage:
            or None if not found
         """
         for clss in classes:
-            if cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+            if cls is classes[clss]:
+                objs = self.__session.query(cls).all()
                 for obj in objs:
                     if obj.id == id:
                         return (obj)
-                    else:
-                        return (None)
-                else:
-                    return (None)
+        return (None)
 
     def count(self, cls=None):
         """Returns the number of objects in storage matching the given class
