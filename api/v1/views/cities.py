@@ -16,7 +16,7 @@ def cities(state_id):
         abort(404)
     for city in obj.cities:
         result.append(city.to_dict())
-    return (result)
+    return (jsonify(result))
 
 
 @app_views.route('/cities/<string:city_id>', strict_slashes=False)

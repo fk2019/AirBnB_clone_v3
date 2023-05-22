@@ -16,7 +16,7 @@ def amenities():
         abort(404)
     for am in obj.values():
         result.append(am.to_dict())
-    return (result)
+    return (jsonify(result))
 
 
 @app_views.route('/amenities/<string:amenity_id>', strict_slashes=False)
