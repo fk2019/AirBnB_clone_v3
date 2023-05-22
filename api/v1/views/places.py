@@ -72,7 +72,7 @@ def post_place(city_id):
 def update_place(place_id):
     """Update a Place object"""
     obj = storage.get(Place, place_id)
-    if not request.get_json():0
+    if not request.get_json():
         return (make_response(jsonify({'error': 'Not a JSON'}), 400))
     elif obj is None:
         abort(404)
