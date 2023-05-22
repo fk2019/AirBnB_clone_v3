@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """New view for Amenity objects"""
 from api.v1.views import app_views
-from flask import abort, request
+from flask import abort, request, make_response, jsonify
 from models import storage
-from models.state import State
-from models.city import City
 from models.amenity import Amenity
+
 
 @app_views.route('/amenities', strict_slashes=False)
 def amenities():
