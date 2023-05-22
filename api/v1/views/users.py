@@ -16,7 +16,7 @@ def users():
         abort(404)
     for am in obj.values():
         result.append(am.to_dict())
-    return (result)
+    return (jsonify(result))
 
 
 @app_views.route('/users/<string:user_id>', strict_slashes=False)
