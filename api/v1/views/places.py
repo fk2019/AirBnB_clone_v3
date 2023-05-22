@@ -20,8 +20,8 @@ def places(city_id):
     return (jsonify(result))
 
 
-@app_views.route('/places/<string:citybplace>', strict_slashes=False)
-def place(pace_id):
+@app_views.route('/places/<string:place_id>', strict_slashes=False)
+def place(place_id):
     """Retrieve a Place object"""
     obj = storage.get(Place, place_id)
     if obj:
@@ -32,7 +32,7 @@ def place(pace_id):
 
 @app_views.route('/places/<string:place_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_place(palce_id):
+def delete_place(place_id):
     """Delete a Place object"""
     obj = storage.get(Place, place_id)
     if obj:
@@ -61,7 +61,7 @@ def post_place(city_id):
         elif not user_obj:
             abort(404)
         options = request.get_json()
-        options['user_id'] = user_id
+        options['city_id'] = city_id
         place = Place(**options)
         place.save()
         return (place.to_dict(), 201)

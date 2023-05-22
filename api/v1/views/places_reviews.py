@@ -9,10 +9,10 @@ from models.user import User
 
 
 @app_views.route('/places/<string:place_id>/reviews', strict_slashes=False)
-def reviews():
+def reviews(place_id):
     """Retrieve list of all Review objects"""
     result = []
-    obj = storage.all(Place, place_id)
+    obj = storage.get(Place, place_id)
     if obj is None:
         abort(404)
     for rev in obj.reviews:
@@ -43,22 +43,23 @@ def delete_review(review_id):
         abort(404)
 
 
-@app_views.route('/places/<strings:place_id>/reviews', methods=['POST'],
+@app_views.route('/places/<string:place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def post_review():
+def post_review(place_id):
     """Post a Review object"""
     if not request.get_json():
         return (make_response(jsonify({'error': 'Not a JSON'}), 400))
-    elif 'user_id' not request.get_json():
+    elif 'user_id' not in request.get_json():
         return (make_response(jsonify({'error': 'Missing user_id'}), 400))
-    elif 'text' not request.get_json():
+    elif 'text' not in request.get_json():
         return (make_response(jsonify({'error': 'text'}), 400))
     place_obj = storage.get(Place, place_id)
-    user_obj = storage.get(User, user_id)
+    user_obj = storage.get(User, request.get_json()['user_id'])
     if not place_obj or not user_obj:
         abort(404)
     options = request.get_json()
-    options['user_id'] = user_id
+    options['user_id'] = request.get_json()['user_id']
+    options['place_id'] = place_id
     review_obj = Review(**options)
     review_obj.save()
     return (review_obj.to_dict(), 201)
