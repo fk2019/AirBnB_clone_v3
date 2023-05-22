@@ -83,3 +83,49 @@ def update_place(place_id):
                 setattr(obj, key, val)
         obj.save()
         return (obj.to_dict(), 200)
+
+
+@app_views.route('/places_search', methods=['POST']strict_slashes=False)
+def places_search(c):
+    """Retrieve list of all Place objects..better"""
+    result = []
+    if not request.get_json():
+        return (make_response(jsonify({'error': 'Not a JSON'}), 400))
+    data = request.get_json()
+    if data and len(data):
+        states = data.get('states')
+        cities = data.get('cities')
+        amenities = data.get('amenities')
+        places = storage.all(Place).values()
+        places_l = []
+        for place in places:
+            places_l.append(place.to_dict())
+        return (places_l)
+    places_l = []
+    if states:
+        state_objs = [storage.get(State, state_id) for state_id in states]
+        for state in state_objs:
+            if state:
+                for city in state.cities:
+                    if city:
+                        for place in city.places:
+                            places_l.append(place)
+    if cities:
+        city_objs = [storage.get(City, city_id) for city_id in cities]
+        for city in city_objs:
+            if city:
+                for place in city.places:
+                    places_l.append(place)
+    if amenities:
+        if not places_l:
+            places_l = storage.all(Place).values()
+        amenity_objs = [storage.get(Amenity, amenity_id)
+                        for amenity_id in amenities]
+        places_l = [place for place in places_l if all([
+            amenity in place.amenities for amenity in amenity_objs])]
+    places = []
+    for place in places_l:
+        obj = place.to_dict()
+        obj.pop('amenities')
+        places.append(obj)
+    return (jsonify(places))
