@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<HTML lang="en">
+  <HEAD>
+    <SCRIPT src="https://code.jquery.com/jquery-3.2.1.min.js"> </SCRIPT>
+		<TITLE>AirBnB clone</TITLE>
+
+		<LINK rel="shortcut icon" href="../static/images/icon.png?{{ cache_id }}" />
+
+		<LINK rel="stylesheet" href="../static/styles/4-common.css?cache_id={{ cache_id }}"/>
+		<LINK rel="stylesheet" href="../static/styles/3-header.css?{{ cache_id }}"/>
+		<LINK rel="stylesheet" href="../static/styles/3-footer.css?{{ cache_id }}"/>
+		<LINK rel="stylesheet" href="../static/styles/6-filters.css?cache_id={{ cache_id }}"/>
+		<LINK rel="stylesheet" href="../static/styles/8-places.css?{{ cache_id }}"/>
+		<SCRIPT SRC="../static/scripts/1-hbnb.js?{{ cache_id }}"></SCRIPT>
+	</HEAD>
+    <BODY>
+		<HEADER>
+			<div id="header_logo"></div>
+		</HEADER>
+		<DIV class="container">
+			<SECTION class="filters">
+
+				<DIV class="locations">
+					<H3>States</H3>
+					<H4>&nbsp;</H4>
+					<UL class="popover">
+					  {% for state in states|sort(attribute='name') %}
+						<LI><h2>{{ state.name }}</h2>
+						  <UL>
+						    {% for city in state.cities|sort(attribute='name') %}
+						    <LI><H4>{{ city.name }}</H4></LI>
+						    {% endfor %}
+						  </UL>
+						</LI>
+					  {% endfor %}
+					</UL>
+				</DIV>
+				<DIV class="amenities">
+					<H3>Amenities</H3>
+					<H4>&nbsp;</H4>
+					<UL class="popover">
+					  {% for amenity in amenities %}
+					  <LI>
+					    <INPUT type="checkbox" data-id="{{amenity.id}}" data-name="{{ amenity.name }}" amenity></INPUT>
+					    <H4>{{ amenity }}</H4>
+					  </LI>
+					  {% endfor %}
+					</UL>
+				</DIV>
+				<BUTTON>Search</BUTTON>
+			</SECTION>
+			<SECTION class="places">
+                          <H1>Places</H1>
+			  {% for place in places.values()|sort(attribute='name') %}
+                          <ARTICLE>
+                            <DIV class="headline">
+                              <H2>{{ place.name }}</H2>
+                              <DIV class="price_by_night">&dollar;{{ place.price_by_night }}</DIV>
+                            </DIV>
+                            <DIV class="information">
+                              <DIV class="max_guest">
+                                <DIV class="guest_icon"></DIV>
+                                <P>{{ place.max_guest }} Guests</P>
+                              </DIV>
+                              <DIV class="number_rooms">
+                                <DIV class="bed_icon"></DIV>
+                                <P>{{ place.number_rooms }} Rooms</P>
+                              </DIV>
+                              <DIV class="number_bathrooms">
+                                <DIV class="bath_icon"></DIV>
+                                <P>{{ place.number_bathrooms }} Bathrooms</P>
+                              </DIV>
+                            </DIV>
+                            <DIV class="user">
+			      <STRONG>Owner</STRONG>: {{place.user.first_name }} {{ place.user.last_name }}
+			    </DIV>
+                            <DIV class="description"> {{ place.description|safe }}</DIV>
+<!--			    <DIV class="amenities">
+			      <H2>Amenities</H2>
+			      {% for amenity in place.amenities|sort(attribute='name') %}
+			      <UL>
+				<LI><P>Pet</P></LI>
+			      </UL>
+			      {% endfor %}
+			    </DIV> -->
+			    <DIV class="reviews">
+			      <H2>{{ place.reviews.__len__() }} Reviews</H2>
+			      {% for review in place.reviews %}
+			      <H3>From {{ review.user.first_name }} the {{ review.created_at.date().__str__() }}</H3>
+			      <UL>
+				<LI><P>{{ review.text|safe }}</P></LI>
+			      </UL>
+			      {% endfor %}
+			    </DIV>
+			  </ARTICLE>
+			  {% endfor %}
+			</SECTION>
+		</DIV>
+		<FOOTER>
+		  <P>Holberton School</P>
+		</FOOTER>
+    </BODY>
+</HTML>
