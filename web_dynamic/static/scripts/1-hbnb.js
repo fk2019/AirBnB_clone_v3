@@ -1,17 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const amenity_ids = []
-  $('#check_amenity input[type=checkbox]').on('click', (event) => {
-	  let amenity_id = ''
-    console.log($("input:checked").val())
-	  /*if ($(this).is(':checked')) {
-      console.log('clicked')
-	    amenity_ids.push(amenity_id)
-	  } else {
-      console.log('Nooo')
-	    const index = amenity_ids.indexOf(amenity_id)
-	    if (index !== -1) {
-		    amenity_ids.splice(index, 1)
-	    }
-    }*/
+  const amenities = {}
+  $('input[type=checkbox]').on('change', function() {
+    if ($(this).is(':checked')) {
+      amenities[$(this).data('id')] = $(this).data('name')
+    } else {
+      delete amenities[$(this).data('id')]
+    }
+    if (Object.keys(amenities).length > 0) {
+      $('.amenities h4:eq(0)').text(Object.values(amenities).join(', '))
+    }
   })
 })
