@@ -18,10 +18,14 @@
 
 .amenities {
 	height: 100%;
-	width: 25%;
+	width: 29%;
 	line-height: 25px;
 }
-
+.amenities > h4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .popover {
 	list-style-type: none;
 	display: none;
