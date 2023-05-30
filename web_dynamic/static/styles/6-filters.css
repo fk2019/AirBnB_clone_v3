@@ -21,7 +21,7 @@
 	width: 29%;
 	line-height: 25px;
 }
-.amenities > h4 {
+.locations > h4, .amenities > h4 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -45,21 +45,29 @@
 	position: relative;
 }
 
-.locations:hover .popover {
-	display: inline-block;
+.locations .popover  ul {
+    margin-top: 20px;
 }
+.locations .popover > li > input {
+    margin-bottom: auto;
 
+}
+.locations:hover .popover {
+    margin-top: 0.9em;
+    display: flex;
+    flex-direction: column;
+}
 .amenities:hover .popover {
     margin-top: -0.15em;
     display: flex;
     flex-direction: column;
 }
 
-.amenities .popover li {
+.popover li {
     display: flex;
     flex-direction: row;
 }
-.amenities .popover li h4 {
+.popover li h4, .popover li h2 {
     padding-left: 10px;
 }
 
@@ -96,7 +104,7 @@ h4 {
 button {
 	color: #FFFFFF;
 	font-size: 18px;
-	
+
 	height: 48px;
 	width: 20%;
 	background-color: #FF5A5F;

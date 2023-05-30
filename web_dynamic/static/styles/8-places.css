@@ -74,6 +74,28 @@ article {
 	margin-top: 5px;
 	margin-bottom: 5px;	
 }
+.reviews > h2, .reviews > span {
+    display: inline-block;
+}
+
+.reviews span button {
+    padding-top: 5px;
+    padding-bottom: 5px;
+	color: #FFFFFF;
+	font-size: 14px;
+	height: 50%;
+	width: 80%;
+
+	background-color: #F9535F;
+	border-style: none;
+	border-radius: 4px;
+	margin-left: 30px;
+
+}
+
+.reviews > span:hover {
+	opacity: 90%;
+}
 
 .description {
 	text-align: left;
