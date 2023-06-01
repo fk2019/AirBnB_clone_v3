@@ -110,35 +110,26 @@ document.addEventListener('DOMContentLoaded', () => {
       const desc = $('<div>').addClass('description').html(place.description);
       const reviews = $('<div>').addClass('reviews');
       if (place.review === undefined) place.review = [];
-      const span = $('<span><button>show</button></span>')
       const review_h = $('<h2>').html(place.review.length + ' Reviews');
-      reviews.append(review_h).append(span)
-      if (place.review.length === 0) span.hide();
-
-      span.on('click' , (event) => {
-        reviews.find('ul').toggle()
-        button = span.find('button')
-        button.text() === 'show' ? button.text('hide') : button.text('show')
+      const div = $('<div>');
+      $.each(place.review, (i, review) => {
+        const reviewer = $('<h3>');
+        const ul = $('<ul>');
+        const li = $('<li>');
+        const rev_par = $('<p>');
+        date = new Date(Date.parse(review.created_at));
+        reviewer.text('From ' + place.users + ' the ' + date);
+        rev_par.html(review.text);
+        ul.append(li).append(rev_par);
+        div.append(reviewer).append(ul);
       });
-      const url3 = 'http://0.0.0.0:5001/api/v1/places/' + place.id + '/reviews'
-      $.get(url3, (data) => {
-        $.each(data, (i, review) => {
-          const ul = $('<ul>').css('display', 'none');
-          const li = $('<li>');
-          const rev_par = $('<p>');
-    //      const reviewer = $('<h3>')
-          date = new Date(Date.parse(review.created_at));
-  //        reviewer.text('From ' + review.id + ' the ' + date);
-          rev_par.html(review.text);
-          li.append(rev_par);
-          ul.append(li)
-//          reviews.append(reviewer)
-          reviews.append(ul)
-        })
-      })
-//      desc.append(reviews);
-      article.append(desc).append(reviews);
+      reviews.append(review_h).append(div);
+      desc.append(reviews);
+      article.append(desc);
       section.append(article);
     });
   };
+
+
+
 });

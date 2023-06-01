@@ -74,6 +74,12 @@ article {
 	margin-top: 5px;
 	margin-bottom: 5px;	
 }
+.place_amenities {
+
+}
+.reviews {
+    text-align: left;
+}
 .reviews > h2, .reviews > span {
     display: inline-block;
 }
@@ -86,7 +92,7 @@ article {
 	height: 50%;
 	width: 80%;
 
-	background-color: #F9535F;
+	background-color: #FF007F;
 	border-style: none;
 	border-radius: 4px;
 	margin-left: 30px;
